@@ -15,10 +15,6 @@ export default function Home() {
 
   useEffect(() => {
     setCompletedWorkouts(getCompletedWorkouts())
-  }, [])
-
-  useEffect(() => {
-    setCompletedWorkouts(getCompletedWorkouts())
   }, [program])
 
   const currentProgram = program === '3day' ? program3Day : program5Day
