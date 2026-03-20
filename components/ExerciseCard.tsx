@@ -18,12 +18,12 @@ interface ExerciseCardProps {
 export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
   return (
     <div className="rounded-2xl border border-blush bg-white shadow-sm overflow-hidden">
-      <Accordion>
+      <Accordion defaultValue={[]}>
         <AccordionItem value={exercise.id} className="border-none">
           <AccordionTrigger
             className={cn(
               'w-full px-4 py-3 hover:no-underline hover:bg-blush/20 transition-colors',
-              'rounded-2xl data-[state=open]:rounded-b-none'
+              'rounded-2xl data-open:rounded-b-none'
             )}
           >
             <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -34,7 +34,7 @@ export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
 
               {/* Name + muscle group */}
               <div className="flex flex-col items-start min-w-0 gap-0.5">
-                <span className="font-sans font-semibold text-sm text-gray-800 leading-tight truncate max-w-[160px]">
+                <span className="font-sans font-semibold text-sm text-gray-800 leading-tight truncate min-w-0">
                   {exercise.name}
                 </span>
                 <span className="inline-block rounded-full bg-blush px-2 py-0.5 text-xs text-pink-dusty font-medium leading-none">
