@@ -1,0 +1,645 @@
+import type { WorkoutProgram, WorkoutDay } from "./types"
+
+const restDay = (id: string, label: string, dayOfWeek: number): WorkoutDay => ({
+  id,
+  label,
+  dayOfWeek,
+  type: "Rest",
+  isRest: true,
+  exercises: [],
+  cardio: {
+    name: "",
+    duration: 0,
+    instructions: [],
+    tips: [],
+  },
+})
+
+const monday: WorkoutDay = {
+  id: "5day-monday",
+  label: "Monday",
+  dayOfWeek: 1,
+  type: "Upper Body A",
+  isRest: false,
+  cardio: {
+    name: "Treadmill LISS",
+    duration: 15,
+    instructions: [
+      "Set the treadmill to a comfortable walking or light jogging pace.",
+      "Maintain a steady, conversational pace for the full 15 minutes.",
+    ],
+    tips: [
+      "You should be able to hold a conversation — if you can't, slow down.",
+      "Aim for a heart rate of roughly 50–65% of your maximum.",
+    ],
+  },
+  exercises: [
+    {
+      id: "5day-monday-dumbbell-bench-press",
+      name: "Dumbbell Bench Press",
+      sets: 3,
+      reps: "12",
+      restSeconds: 60,
+      muscleGroup: "Chest",
+      instructions: [
+        "Lie on a flat bench holding a dumbbell in each hand at chest level, elbows at roughly 45 degrees.",
+        "Press the dumbbells up until your arms are nearly straight, then lower slowly back to the start.",
+        "Keep your feet flat on the floor and maintain a slight arch in your lower back.",
+      ],
+      tips: [
+        "Lower the weights with control — the eccentric phase builds strength too.",
+        "Avoid flaring your elbows out to 90 degrees; a slight tuck protects your shoulders.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=dumbbell+bench+press+form+tutorial",
+    },
+    {
+      id: "5day-monday-bent-over-row",
+      name: "Bent-Over Row",
+      sets: 3,
+      reps: "12",
+      restSeconds: 60,
+      muscleGroup: "Back",
+      instructions: [
+        "Hold dumbbells with a neutral grip, hinge forward at the hips until your torso is roughly parallel to the floor.",
+        "Pull the dumbbells toward your hips, leading with your elbows and squeezing your shoulder blades at the top.",
+        "Lower the weights slowly and repeat.",
+      ],
+      tips: [
+        "Keep your core braced to protect your lower back.",
+        "Think 'elbows to your back pockets' to engage your lats properly.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=bent+over+row+form+tutorial",
+    },
+    {
+      id: "5day-monday-shoulder-press",
+      name: "Shoulder Press",
+      sets: 3,
+      reps: "10",
+      restSeconds: 60,
+      muscleGroup: "Shoulders",
+      instructions: [
+        "Sit or stand holding dumbbells at shoulder height, palms facing forward.",
+        "Press the dumbbells straight overhead until your arms are fully extended.",
+        "Lower slowly back to shoulder height and repeat.",
+      ],
+      tips: [
+        "Avoid leaning back as you press — engage your core to stay upright.",
+        "Don't lock out your elbows aggressively at the top; keep a soft bend.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=dumbbell+shoulder+press+form+tutorial",
+    },
+    {
+      id: "5day-monday-lateral-raises",
+      name: "Lateral Raises",
+      sets: 3,
+      reps: "15",
+      restSeconds: 45,
+      muscleGroup: "Shoulders",
+      instructions: [
+        "Stand holding light dumbbells at your sides, palms facing in.",
+        "With a slight bend in your elbows, raise your arms out to the sides until they reach shoulder height.",
+        "Lower slowly back to the start.",
+      ],
+      tips: [
+        "Use lighter weight than you think you need — this exercise is harder than it looks.",
+        "Lead with your elbows, not your wrists, to keep tension on the deltoids.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=lateral+raises+form+tutorial",
+    },
+    {
+      id: "5day-monday-bicep-curl",
+      name: "Bicep Curl",
+      sets: 3,
+      reps: "12",
+      restSeconds: 45,
+      muscleGroup: "Biceps",
+      instructions: [
+        "Stand holding dumbbells at your sides, palms facing forward.",
+        "Curl the weights up toward your shoulders, keeping your elbows tucked in at your sides.",
+        "Lower slowly back to the starting position.",
+      ],
+      tips: [
+        "Avoid swinging your body — the movement should come from your arms only.",
+        "Squeeze your biceps at the top of each rep for a better contraction.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=bicep+curl+form+tutorial",
+    },
+    {
+      id: "5day-monday-tricep-overhead-extension",
+      name: "Tricep Overhead Extension",
+      sets: 3,
+      reps: "12",
+      restSeconds: 45,
+      muscleGroup: "Triceps",
+      instructions: [
+        "Hold one dumbbell with both hands overhead, arms extended.",
+        "Bend your elbows to lower the dumbbell behind your head, keeping your upper arms still.",
+        "Extend your arms back to the start position.",
+      ],
+      tips: [
+        "Keep your elbows pointing forward — don't let them flare out.",
+        "Move slowly on the way down to feel a full tricep stretch.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=tricep+overhead+extension+form+tutorial",
+    },
+  ],
+}
+
+const tuesday: WorkoutDay = {
+  id: "5day-tuesday",
+  label: "Tuesday",
+  dayOfWeek: 2,
+  type: "Lower Body A",
+  isRest: false,
+  cardio: {
+    name: "Treadmill LISS",
+    duration: 15,
+    instructions: [
+      "Set the treadmill to a comfortable walking or light jogging pace.",
+      "Maintain a steady, conversational pace for the full 15 minutes.",
+    ],
+    tips: [
+      "You should be able to hold a conversation — if you can't, slow down.",
+      "Aim for a heart rate of roughly 50–65% of your maximum.",
+    ],
+  },
+  exercises: [
+    {
+      id: "5day-tuesday-goblet-squat",
+      name: "Goblet Squat",
+      sets: 3,
+      reps: "12",
+      restSeconds: 60,
+      muscleGroup: "Legs",
+      instructions: [
+        "Hold a dumbbell vertically at your chest with both hands, elbows pointing down.",
+        "Stand with feet shoulder-width apart, toes slightly turned out.",
+        "Squat down until your thighs are parallel to the floor, then drive through your heels to stand.",
+      ],
+      tips: [
+        "Keep your knees tracking over your toes throughout the movement.",
+        "Think 'chest up, hips back' to maintain a neutral spine.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=goblet+squat+form+tutorial",
+    },
+    {
+      id: "5day-tuesday-romanian-deadlift",
+      name: "Romanian Deadlift",
+      sets: 3,
+      reps: "12",
+      restSeconds: 60,
+      muscleGroup: "Hamstrings",
+      instructions: [
+        "Stand holding dumbbells in front of your thighs, feet hip-width apart.",
+        "Hinge at the hips, lowering the weights along your legs while keeping a slight bend in your knees.",
+        "Lower until you feel a stretch in your hamstrings, then drive your hips forward to stand.",
+      ],
+      tips: [
+        "Keep the dumbbells close to your legs the entire time.",
+        "Avoid rounding your lower back — think 'proud chest' as you hinge.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=romanian+deadlift+form+tutorial",
+    },
+    {
+      id: "5day-tuesday-walking-lunge",
+      name: "Walking Lunge",
+      sets: 3,
+      reps: "10 each",
+      restSeconds: 60,
+      muscleGroup: "Legs",
+      instructions: [
+        "Stand tall holding dumbbells at your sides.",
+        "Step forward with one foot and lower your back knee toward the floor.",
+        "Push off your back foot and bring it forward to step into the next lunge.",
+      ],
+      tips: [
+        "Keep your torso upright and your front knee behind your toes.",
+        "Take a long enough stride so your front shin stays vertical at the bottom.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=walking+lunge+form+tutorial",
+    },
+    {
+      id: "5day-tuesday-glute-bridge",
+      name: "Glute Bridge",
+      sets: 3,
+      reps: "15",
+      restSeconds: 60,
+      muscleGroup: "Glutes",
+      instructions: [
+        "Lie on your back with knees bent and feet flat on the floor, hip-width apart.",
+        "Drive through your heels to lift your hips until your body forms a straight line from shoulders to knees.",
+        "Squeeze your glutes at the top, then lower slowly back down.",
+      ],
+      tips: [
+        "Place a dumbbell across your hips for added resistance.",
+        "Focus on squeezing your glutes — not just lifting your hips.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=glute+bridge+form+tutorial",
+    },
+    {
+      id: "5day-tuesday-calf-raises",
+      name: "Calf Raises",
+      sets: 3,
+      reps: "15",
+      restSeconds: 45,
+      muscleGroup: "Calves",
+      instructions: [
+        "Stand with feet hip-width apart, holding dumbbells at your sides or hands on a wall for balance.",
+        "Rise up onto the balls of your feet as high as possible.",
+        "Lower slowly back down to the floor.",
+      ],
+      tips: [
+        "Go through the full range of motion — a full stretch at the bottom makes this more effective.",
+        "For more challenge, perform on a step to increase the range of motion.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=calf+raises+form+tutorial",
+    },
+  ],
+}
+
+const wednesday: WorkoutDay = {
+  id: "5day-wednesday",
+  label: "Wednesday",
+  dayOfWeek: 3,
+  type: "Cardio + Core",
+  isRest: false,
+  cardio: {
+    name: "Treadmill LISS",
+    duration: 30,
+    instructions: [
+      "Set the treadmill to a comfortable walking or light jogging pace.",
+      "Maintain a steady, conversational pace for the full 30 minutes.",
+      "Focus on breathing steadily — today cardio is the main event.",
+    ],
+    tips: [
+      "You should be able to hold a conversation — if you can't, slow down.",
+      "Aim for a heart rate of roughly 50–65% of your maximum.",
+    ],
+  },
+  exercises: [
+    {
+      id: "5day-wednesday-plank",
+      name: "Plank",
+      sets: 3,
+      reps: "45 sec",
+      restSeconds: 45,
+      muscleGroup: "Core",
+      instructions: [
+        "Start in a forearm plank position with your elbows under your shoulders and feet hip-width apart.",
+        "Keep your body in a straight line from head to heels — don't let your hips sag or rise.",
+        "Hold for 45 seconds, breathing steadily.",
+      ],
+      tips: [
+        "Squeeze your glutes and brace your abs throughout.",
+        "If 45 seconds is too hard, drop to your knees or reduce the hold time.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=plank+form+tutorial",
+    },
+    {
+      id: "5day-wednesday-bicycle-crunches",
+      name: "Bicycle Crunches",
+      sets: 3,
+      reps: "15",
+      restSeconds: 45,
+      muscleGroup: "Core",
+      instructions: [
+        "Lie on your back with hands lightly behind your head and knees bent at 90 degrees.",
+        "Bring your right elbow toward your left knee while extending your right leg, then alternate sides.",
+        "Move in a controlled, rhythmic pedaling motion.",
+      ],
+      tips: [
+        "Don't pull on your neck — keep your hands light and lead with your shoulder.",
+        "Slow it down for more core engagement; speed reduces effectiveness.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=bicycle+crunches+form+tutorial",
+    },
+    {
+      id: "5day-wednesday-dead-bug",
+      name: "Dead Bug",
+      sets: 3,
+      reps: "10",
+      restSeconds: 45,
+      muscleGroup: "Core",
+      instructions: [
+        "Lie on your back with arms extended toward the ceiling and knees bent at 90 degrees.",
+        "Slowly lower your right arm overhead and extend your left leg toward the floor simultaneously, keeping your lower back pressed to the ground.",
+        "Return to the start and repeat on the opposite side. That's one rep.",
+      ],
+      tips: [
+        "Move slowly and with control — the goal is stability, not speed.",
+        "If your lower back lifts off the floor, reduce the range of motion.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=dead+bug+exercise+form+tutorial",
+    },
+    {
+      id: "5day-wednesday-side-plank",
+      name: "Side Plank",
+      sets: 3,
+      reps: "20 sec each",
+      restSeconds: 45,
+      muscleGroup: "Core",
+      instructions: [
+        "Lie on your side with your elbow directly under your shoulder and feet stacked.",
+        "Lift your hips off the floor to create a straight line from head to feet.",
+        "Hold for 20 seconds, then switch sides.",
+      ],
+      tips: [
+        "Don't let your hips sag — keep squeezing your obliques throughout.",
+        "For a modification, bend your bottom knee to the floor for extra support.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=side+plank+form+tutorial",
+    },
+    {
+      id: "5day-wednesday-russian-twists",
+      name: "Russian Twists",
+      sets: 3,
+      reps: "15",
+      restSeconds: 45,
+      muscleGroup: "Core",
+      instructions: [
+        "Sit on the floor with knees bent, feet flat or slightly raised, and lean back slightly to engage your core.",
+        "Hold a dumbbell or clasp your hands together and rotate your torso from side to side.",
+        "Touch the weight or hands to the floor on each side to count one rep.",
+      ],
+      tips: [
+        "The rotation should come from your torso, not your arms.",
+        "Keep your chest up and avoid rounding your back.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=russian+twists+form+tutorial",
+    },
+  ],
+}
+
+const thursday: WorkoutDay = {
+  id: "5day-thursday",
+  label: "Thursday",
+  dayOfWeek: 4,
+  type: "Upper Body B",
+  isRest: false,
+  cardio: {
+    name: "Treadmill LISS",
+    duration: 15,
+    instructions: [
+      "Set the treadmill to a comfortable walking or light jogging pace.",
+      "Maintain a steady, conversational pace for the full 15 minutes.",
+    ],
+    tips: [
+      "You should be able to hold a conversation — if you can't, slow down.",
+      "Aim for a heart rate of roughly 50–65% of your maximum.",
+    ],
+  },
+  exercises: [
+    {
+      id: "5day-thursday-incline-dumbbell-press",
+      name: "Incline Dumbbell Press",
+      sets: 3,
+      reps: "12",
+      restSeconds: 60,
+      muscleGroup: "Chest",
+      instructions: [
+        "Set a bench to a 30–45 degree incline and lie back holding dumbbells at chest height.",
+        "Press the weights up and slightly together until your arms are nearly straight.",
+        "Lower slowly back to chest level and repeat.",
+      ],
+      tips: [
+        "The incline angle shifts emphasis to your upper chest.",
+        "Keep your shoulder blades retracted against the bench throughout.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=incline+dumbbell+press+form+tutorial",
+    },
+    {
+      id: "5day-thursday-single-arm-row",
+      name: "Single-Arm Row",
+      sets: 3,
+      reps: "12 each",
+      restSeconds: 60,
+      muscleGroup: "Back",
+      instructions: [
+        "Place one hand and same-side knee on a bench, holding a dumbbell in the opposite hand.",
+        "Pull the dumbbell up toward your hip, leading with your elbow and squeezing your shoulder blade at the top.",
+        "Lower slowly and complete all reps before switching sides.",
+      ],
+      tips: [
+        "Keep your back flat and parallel to the floor throughout.",
+        "Avoid rotating your torso — the movement should be in your arm and shoulder blade only.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=single+arm+dumbbell+row+form+tutorial",
+    },
+    {
+      id: "5day-thursday-arnold-press",
+      name: "Arnold Press",
+      sets: 3,
+      reps: "10",
+      restSeconds: 60,
+      muscleGroup: "Shoulders",
+      instructions: [
+        "Sit holding dumbbells in front of your shoulders, palms facing you.",
+        "As you press the weights overhead, rotate your palms to face forward.",
+        "Reverse the rotation as you lower back to the start.",
+      ],
+      tips: [
+        "Move smoothly — the rotation should happen gradually through the full range of motion.",
+        "This exercise hits all three heads of the deltoid thanks to the rotation.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=arnold+press+form+tutorial",
+    },
+    {
+      id: "5day-thursday-front-raises",
+      name: "Front Raises",
+      sets: 3,
+      reps: "12",
+      restSeconds: 45,
+      muscleGroup: "Shoulders",
+      instructions: [
+        "Stand holding dumbbells in front of your thighs, palms facing down.",
+        "Raise one or both arms straight in front of you to shoulder height.",
+        "Lower slowly and repeat.",
+      ],
+      tips: [
+        "Use light weight — your front deltoids are often already worked by pressing movements.",
+        "Avoid swinging; the motion should be slow and controlled.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=dumbbell+front+raises+form+tutorial",
+    },
+    {
+      id: "5day-thursday-hammer-curl",
+      name: "Hammer Curl",
+      sets: 3,
+      reps: "12",
+      restSeconds: 45,
+      muscleGroup: "Biceps",
+      instructions: [
+        "Stand holding dumbbells at your sides with a neutral grip (palms facing each other).",
+        "Curl the weights up toward your shoulders, keeping your elbows tucked in.",
+        "Lower slowly back to the start.",
+      ],
+      tips: [
+        "The neutral grip targets the brachialis and forearms in addition to the biceps.",
+        "Keep the motion strict — no body swinging.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=hammer+curl+form+tutorial",
+    },
+    {
+      id: "5day-thursday-tricep-dips",
+      name: "Tricep Dips",
+      sets: 3,
+      reps: "10",
+      restSeconds: 45,
+      muscleGroup: "Triceps",
+      instructions: [
+        "Sit on the edge of a bench or chair, hands gripping the edge beside your hips.",
+        "Slide your hips off the edge and lower your body by bending your elbows to about 90 degrees.",
+        "Press back up to the starting position.",
+      ],
+      tips: [
+        "Keep your back close to the bench to isolate your triceps.",
+        "For more difficulty, extend your legs straight out in front of you.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=tricep+dips+form+tutorial",
+    },
+  ],
+}
+
+const friday: WorkoutDay = {
+  id: "5day-friday",
+  label: "Friday",
+  dayOfWeek: 5,
+  type: "Lower Body B",
+  isRest: false,
+  cardio: {
+    name: "Treadmill LISS",
+    duration: 15,
+    instructions: [
+      "Set the treadmill to a comfortable walking or light jogging pace.",
+      "Maintain a steady, conversational pace for the full 15 minutes.",
+    ],
+    tips: [
+      "You should be able to hold a conversation — if you can't, slow down.",
+      "Aim for a heart rate of roughly 50–65% of your maximum.",
+    ],
+  },
+  exercises: [
+    {
+      id: "5day-friday-sumo-squat",
+      name: "Sumo Squat",
+      sets: 3,
+      reps: "12",
+      restSeconds: 60,
+      muscleGroup: "Legs",
+      instructions: [
+        "Stand with feet wider than shoulder-width and toes pointed out at 45 degrees, holding a dumbbell at your chest.",
+        "Squat down until your thighs are parallel to the floor, keeping your knees tracking over your toes.",
+        "Drive through your heels to return to standing.",
+      ],
+      tips: [
+        "A wider stance targets your inner thighs more than a standard squat.",
+        "Keep your chest up and avoid letting your knees cave inward.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=sumo+squat+form+tutorial",
+    },
+    {
+      id: "5day-friday-dumbbell-deadlift",
+      name: "Dumbbell Deadlift",
+      sets: 3,
+      reps: "10",
+      restSeconds: 60,
+      muscleGroup: "Hamstrings",
+      instructions: [
+        "Stand with feet hip-width apart, holding dumbbells in front of your thighs.",
+        "Hinge at the hips and bend your knees to lower the dumbbells toward the floor, keeping your back flat.",
+        "Drive through your heels and extend your hips to return to standing.",
+      ],
+      tips: [
+        "Keep the dumbbells close to your body throughout the movement.",
+        "Think about pushing the floor away rather than pulling the weight up.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=dumbbell+deadlift+form+tutorial",
+    },
+    {
+      id: "5day-friday-reverse-lunge",
+      name: "Reverse Lunge",
+      sets: 3,
+      reps: "12 each",
+      restSeconds: 60,
+      muscleGroup: "Legs",
+      instructions: [
+        "Stand tall holding dumbbells at your sides.",
+        "Step one foot back and lower your back knee toward the floor until both knees are at 90 degrees.",
+        "Push through your front foot to return to standing, then repeat on the other leg.",
+      ],
+      tips: [
+        "Stepping back is easier on the knees and great for beginners.",
+        "Keep your front shin vertical and your torso upright throughout.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=reverse+lunge+form+tutorial",
+    },
+    {
+      id: "5day-friday-hip-thrust",
+      name: "Hip Thrust (dumbbell)",
+      sets: 3,
+      reps: "15",
+      restSeconds: 60,
+      muscleGroup: "Glutes",
+      instructions: [
+        "Sit with your upper back against a bench, knees bent, feet flat on the floor, and a dumbbell across your hips.",
+        "Drive through your heels to thrust your hips upward until your body is parallel to the floor.",
+        "Squeeze your glutes at the top, then lower with control.",
+      ],
+      tips: [
+        "Tuck your chin slightly and keep your ribs down to avoid overextending your lower back.",
+        "The hip thrust is one of the best exercises for glute activation — really squeeze at the top.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=dumbbell+hip+thrust+form+tutorial",
+    },
+    {
+      id: "5day-friday-wall-sit",
+      name: "Wall Sit",
+      sets: 3,
+      reps: "30 sec",
+      restSeconds: 45,
+      muscleGroup: "Legs",
+      instructions: [
+        "Stand with your back against a wall and slide down until your thighs are parallel to the floor.",
+        "Keep your knees at 90 degrees and your back flat against the wall.",
+        "Hold for 30 seconds, breathing steadily.",
+      ],
+      tips: [
+        "Your knees should be directly above your ankles, not in front of them.",
+        "Engage your core to help stabilize and take pressure off your back.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=wall+sit+form+tutorial",
+    },
+    {
+      id: "5day-friday-calf-raises",
+      name: "Calf Raises",
+      sets: 3,
+      reps: "15",
+      restSeconds: 45,
+      muscleGroup: "Calves",
+      instructions: [
+        "Stand with feet hip-width apart, holding dumbbells at your sides or hands on a wall for balance.",
+        "Rise up onto the balls of your feet as high as possible.",
+        "Lower slowly back down to the floor.",
+      ],
+      tips: [
+        "Go through the full range of motion — a full stretch at the bottom is key.",
+        "For more challenge, perform on a step to increase the range of motion.",
+      ],
+      youtubeUrl: "https://www.youtube.com/results?search_query=calf+raises+form+tutorial",
+    },
+  ],
+}
+
+export const program5Day: WorkoutProgram = {
+  id: "5day",
+  name: "5-Day Split",
+  days: [
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    restDay("5day-saturday", "Saturday", 6),
+    restDay("5day-sunday", "Sunday", 0),
+  ],
+}
