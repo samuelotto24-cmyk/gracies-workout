@@ -6,12 +6,7 @@ export default function Header({
   title = "Gracie's Workout Plan",
 }: HeaderProps) {
   return (
-    <header
-      className="w-full py-10 px-6 text-center"
-      style={{
-        background: "linear-gradient(135deg, #C9848A 0%, #B56576 100%)",
-      }}
-    >
+    <header className="w-full py-10 px-6 text-center bg-gradient-to-br from-pink-dusty to-mauve">
       <p className="font-sans text-sm font-medium tracking-widest uppercase text-white/70 mb-3">
         🌸 Personal Fitness Journey 🌸
       </p>
