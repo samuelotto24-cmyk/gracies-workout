@@ -35,7 +35,7 @@ export default function WorkoutPage({
         <h1 className="font-heading text-3xl text-pink-dusty mb-2">Workout not found</h1>
         <p className="text-gray-500 mb-8">We couldn't find a workout for that day.</p>
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push('/')}
           className="bg-blush text-mauve rounded-2xl px-6 py-3 font-medium hover:bg-pink-dusty hover:text-white transition-colors"
         >
           ← This Week
@@ -52,7 +52,7 @@ export default function WorkoutPage({
         <h1 className="font-heading text-3xl text-pink-dusty mb-2">Rest Day</h1>
         <p className="text-gray-500 mb-8">Recovery is part of the process! Take it easy today.</p>
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push('/')}
           className="bg-blush text-mauve rounded-2xl px-6 py-3 font-medium hover:bg-pink-dusty hover:text-white transition-colors"
         >
           ← Back to schedule
@@ -62,8 +62,9 @@ export default function WorkoutPage({
   }
 
   const handleToggleComplete = () => {
+    if (!workoutDay) return
     toggleWorkoutComplete(workoutDay.id)
-    setIsCompleted(isWorkoutComplete(workoutDay.id))
+    setIsCompleted(prev => !prev)
   }
 
   return (
@@ -71,7 +72,7 @@ export default function WorkoutPage({
       {/* Back button row */}
       <div className="max-w-2xl mx-auto px-4 py-4">
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push('/')}
           className="text-mauve font-medium text-sm hover:text-pink-dusty transition-colors flex items-center gap-1"
         >
           ← This Week
@@ -95,7 +96,9 @@ export default function WorkoutPage({
         ))}
 
         {/* Cardio section */}
-        <CardioCard cardio={workoutDay.cardio} />
+        {workoutDay.cardio.duration > 0 && (
+          <CardioCard cardio={workoutDay.cardio} />
+        )}
 
         {/* Mark Complete button */}
         <div className="pt-4 pb-8">
