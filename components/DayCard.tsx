@@ -1,5 +1,6 @@
 'use client'
 
+import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { WorkoutDay } from '@/lib/workouts/types'
 
@@ -34,10 +35,10 @@ export default function DayCard({ day, isCompleted, onNavigate }: DayCardProps) 
     >
       {isCompleted && (
         <span
-          className="absolute top-1.5 right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-white text-[10px] font-bold leading-none"
+          className="absolute top-1.5 right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-white"
           aria-label="Completed"
         >
-          ✓
+          <Check className="h-3 w-3" />
         </span>
       )}
       <span className="text-xs font-sans font-semibold text-gray-700 uppercase tracking-wide">

@@ -1,25 +1,34 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { getWeeklyProgress, getStreak } from '@/lib/progress'
 
 interface ProgressTrackerProps {
   programId: '3day' | '5day'
-  completedWorkouts: string[]
 }
 
 export default function ProgressTracker({ programId }: ProgressTrackerProps) {
-  const { completed, total } = getWeeklyProgress(programId)
-  const streak = getStreak()
+  const [progress, setProgress] = useState<{ completed: number; total: number } | null>(null)
+  const [streak, setStreak] = useState<number | null>(null)
+
+  useEffect(() => {
+    setProgress(getWeeklyProgress(programId))
+    setStreak(getStreak())
+  }, [programId])
 
   const weeklyLabel =
-    completed === 0
-      ? "Let's get started! ✨"
-      : `${completed}/${total} this week ${total === 3 ? '🔥' : '💪'}`
+    progress === null
+      ? '…'
+      : progress.completed === 0
+        ? "Let's get started! ✨"
+        : `${progress.completed}/${progress.total} this week ${programId === '3day' ? '🔥' : '💪'}`
 
   const streakLabel =
-    streak === 0
-      ? 'No streak yet'
-      : `${streak} week streak 🏆`
+    streak === null
+      ? '…'
+      : streak === 0
+        ? 'No streak yet'
+        : `${streak} week streak 🏆`
 
   return (
     <div className="flex gap-3 px-4">

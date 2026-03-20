@@ -1,5 +1,6 @@
 'use client'
 
+import { useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import type { WorkoutProgram } from '@/lib/workouts/types'
 import DayCard from './DayCard'
@@ -12,9 +13,11 @@ interface WeekCalendarProps {
 export default function WeekCalendar({ program, completedWorkouts }: WeekCalendarProps) {
   const router = useRouter()
 
-  function handleNavigate(dayId: string) {
+  const handleNavigate = useCallback((dayId: string) => {
     router.push(`/workout/${dayId}`)
-  }
+  }, [router])
+
+  const completedSet = useMemo(() => new Set(completedWorkouts), [completedWorkouts])
 
   return (
     <section className="px-4">
@@ -27,7 +30,7 @@ export default function WeekCalendar({ program, completedWorkouts }: WeekCalenda
             <DayCard
               key={day.id}
               day={day}
-              isCompleted={completedWorkouts.includes(day.id)}
+              isCompleted={completedSet.has(day.id)}
               onNavigate={handleNavigate}
             />
           ))}
