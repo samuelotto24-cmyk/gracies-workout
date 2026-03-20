@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { getWeeklyProgress, getStreak } from '@/lib/progress'
 
 interface ProgressTrackerProps {
@@ -8,13 +8,11 @@ interface ProgressTrackerProps {
 }
 
 export default function ProgressTracker({ programId }: ProgressTrackerProps) {
-  const [progress, setProgress] = useState<{ completed: number; total: number } | null>(null)
-  const [streak, setStreak] = useState<number | null>(null)
-
-  useEffect(() => {
-    setProgress(getWeeklyProgress(programId))
-    setStreak(getStreak())
-  }, [programId])
+  // Derive progress synchronously from localStorage — no effect needed
+  const progress = useMemo(() => getWeeklyProgress(programId), [programId])
+  // Re-derive streak whenever programId changes so the UI refreshes together
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const streak = useMemo(() => getStreak(), [programId])
 
   const weeklyLabel =
     progress === null

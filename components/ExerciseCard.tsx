@@ -19,11 +19,11 @@ export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
   return (
     <div className="rounded-2xl border border-blush bg-white shadow-sm overflow-hidden">
       <Accordion defaultValue={[]}>
-        <AccordionItem value={exercise.id} className="border-none">
+        <AccordionItem value={exercise.id} className="border-none data-open:rounded-b-none">
           <AccordionTrigger
             className={cn(
               'w-full px-4 py-3 hover:no-underline hover:bg-blush/20 transition-colors',
-              'rounded-2xl data-open:rounded-b-none'
+              'rounded-2xl'
             )}
           >
             <div className="flex items-center gap-3 flex-1 min-w-0">

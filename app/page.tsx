@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import Header from '@/components/Header'
 import ProgramToggle from '@/components/ProgramToggle'
 import ProgressTracker from '@/components/ProgressTracker'
@@ -11,11 +11,10 @@ import { getCompletedWorkouts } from '@/lib/progress'
 
 export default function Home() {
   const [program, setProgram] = useState<'3day' | '5day'>('3day')
-  const [completedWorkouts, setCompletedWorkouts] = useState<string[]>([])
 
-  useEffect(() => {
-    setCompletedWorkouts(getCompletedWorkouts())
-  }, [program])
+  // Derive completedWorkouts synchronously from localStorage — no effect needed
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const completedWorkouts = useMemo(() => getCompletedWorkouts(), [program])
 
   const currentProgram = program === '3day' ? program3Day : program5Day
 

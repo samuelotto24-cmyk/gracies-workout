@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState, useEffect } from 'react'
+import { use, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ExerciseCard from '@/components/ExerciseCard'
 import CardioCard from '@/components/CardioCard'
@@ -19,13 +19,10 @@ export default function WorkoutPage({
   const { day } = use(params)
   const router = useRouter()
   const workoutDay = allDays.find((d) => d.id === day)
-  const [isCompleted, setIsCompleted] = useState(false)
-
-  useEffect(() => {
-    if (workoutDay) {
-      setIsCompleted(isWorkoutComplete(workoutDay.id))
-    }
-  }, [workoutDay?.id])
+  const [isCompleted, setIsCompleted] = useState(() => {
+    if (typeof window === 'undefined' || !workoutDay) return false
+    return isWorkoutComplete(workoutDay.id)
+  })
 
   // Not found
   if (!workoutDay) {
@@ -33,7 +30,7 @@ export default function WorkoutPage({
       <main className="max-w-2xl mx-auto px-4 py-12 text-center">
         <div className="text-6xl mb-4">🤔</div>
         <h1 className="font-heading text-3xl text-pink-dusty mb-2">Workout not found</h1>
-        <p className="text-gray-500 mb-8">We couldn't find a workout for that day.</p>
+        <p className="text-gray-500 mb-8">We couldn&apos;t find a workout for that day.</p>
         <button
           onClick={() => router.push('/')}
           className="bg-blush text-mauve rounded-2xl px-6 py-3 font-medium hover:bg-pink-dusty hover:text-white transition-colors"
