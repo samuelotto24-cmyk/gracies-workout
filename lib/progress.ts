@@ -72,7 +72,8 @@ function writeStore(store: Record<string, string[]>): void {
 export function getCompletedWorkouts(weekKey?: string): string[] {
   const key = weekKey ?? getWeekKey()
   const store = readStore()
-  return store[key] ?? []
+  const entry = store[key]
+  return Array.isArray(entry) ? entry : []
 }
 
 /**
@@ -82,7 +83,8 @@ export function getCompletedWorkouts(weekKey?: string): string[] {
 export function markWorkoutComplete(workoutId: string): void {
   const key = getWeekKey()
   const store = readStore()
-  const list = store[key] ?? []
+  const entry = store[key]
+  const list = Array.isArray(entry) ? entry : []
   if (!list.includes(workoutId)) {
     store[key] = [...list, workoutId]
     writeStore(store)
@@ -96,7 +98,8 @@ export function markWorkoutComplete(workoutId: string): void {
 export function toggleWorkoutComplete(workoutId: string): void {
   const key = getWeekKey()
   const store = readStore()
-  const list = store[key] ?? []
+  const entry = store[key]
+  const list = Array.isArray(entry) ? entry : []
   if (list.includes(workoutId)) {
     store[key] = list.filter((id) => id !== workoutId)
   } else {
@@ -125,7 +128,8 @@ export function getStreak(): number {
   // Walk backwards week by week
   while (true) {
     const key = getWeekKey(date)
-    const completed = store[key] ?? []
+    const entry = store[key]
+    const completed = Array.isArray(entry) ? entry : []
     if (completed.length === 0) break
     streak++
     // Move back exactly 7 days
@@ -149,11 +153,12 @@ export function getWeeklyProgress(
   const total = programId === "3day" ? 3 : 5
   const key = weekKey ?? getWeekKey()
   const store = readStore()
-  const completedList = store[key] ?? []
+  const entry = store[key]
+  const completedList = Array.isArray(entry) ? entry : []
 
   // Workout IDs follow the pattern "<programId>-<day>", e.g. "3day-monday"
   const prefix = programId + "-"
   const completed = completedList.filter((id) => id.startsWith(prefix)).length
 
-  return { completed, total }
+  return { completed: Math.min(completed, total), total }
 }
